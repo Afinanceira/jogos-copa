@@ -2,108 +2,40 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>AFinanceira | Terminal de Inteligência Tática</title>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyA7rASwFOP-_zUt31vJw6aKDuLKF0sYuIY",
-            authDomain: "afinanceira-copa.firebaseapp.com",
-            databaseURL: "https://afinanceira-copa-default-rtdb.firebaseio.com",
-            projectId: "afinanceira-copa",
-            storageBucket: "afinanceira-copa.appspot.com",
-            messagingSenderId: "1093540254408",
-            appId: "1:1093540254408:web:1d9d8d41a4aa373ee1cbfd"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // Registrar Projeção
-        window.registrar = () => {
-            const nome = document.getElementById('nome').value;
-            const palpite = document.getElementById('palpite').value;
-            if(nome && palpite) {
-                push(ref(db, 'apostas/'), { nome, palpite });
-                document.getElementById('palpite').value = "";
-            }
-        };
-
-        // Escuta Real-time
-        onValue(ref(db, 'apostas/'), (snapshot) => {
-            const lista = document.getElementById('lista-apostas');
-            lista.innerHTML = "";
-            let contagem = { 'Brasil': 0, 'Empate': 0, 'Escócia': 0 };
-            
-            snapshot.forEach((child) => {
-                const data = child.val();
-                lista.innerHTML += `<tr><td>${data.nome}</td><td>${data.palpite}</td></tr>`;
-                if (data.palpite.toLowerCase().includes("brasil")) contagem['Brasil']++;
-                else if (data.palpite.toLowerCase().includes("empate")) contagem['Empate']++;
-                else contagem['Escócia']++;
-            });
-            atualizarGrafico(contagem);
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        :root { --black: #000; --gold: #D4AF37; --green: #008060; }
-        body { background: var(--black); color: #fff; font-family: 'Segoe UI', sans-serif; padding: 30px; }
-        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .card { border: 1px solid var(--gold); padding: 25px; background: #0a0a0a; border-radius: 5px; }
-        h1, h2 { color: var(--gold); text-transform: uppercase; border-bottom: 2px solid var(--green); padding-bottom: 10px; }
-        .analysis { border-left: 3px solid var(--green); padding-left: 15px; font-style: italic; color: #ccc; margin: 10px 0; }
-        input { width: 90%; padding: 12px; background: #000; border: 1px solid var(--gold); color: white; margin-bottom: 10px; }
-        button { background: var(--gold); color: #000; border: none; padding: 12px 25px; font-weight: bold; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { color: var(--gold); text-align: left; padding: 10px; }
-        td { padding: 10px; border-bottom: 1px solid #333; }
-    </style>
+    <title>AFinanceira | Terminal de Inteligência</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-<h1>AFINANCEIRA | TERMINAL DE INTELIGÊNCIA TÁTICA</h1>
+<header>
+    <h1>AFINANCEIRA | TERMINAL DE INTELIGÊNCIA - BRASIL 2026</h1>
+</header>
 
-<div class="dashboard">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" class="bola" style="top: 200px; left: 100px;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" class="bola" style="bottom: 100px; right: 150px; animation-delay: 2s;">
+
+<div class="container">
     <div class="card">
-        <h2>Histórico de Performance (Seleção Brasileira)</h2>
-        <p><strong>Brasil 1 x 1 Marrocos:</strong> <div class="analysis">Estratégia: Jogo posicional rígido. O Marrocos neutralizou nossas transições com um bloco defensivo compacto e transições rápidas.</div></p>
-        <p><strong>Brasil 3 x 0 Haiti:</strong> <div class="analysis">Estratégia: Verticalidade e pressão alta. A superioridade técnica no terço final forçou falhas sucessivas na saída de bola adversária.</div></p>
-        <h2 style="margin-top:40px">Próximo Objetivo: Brasil vs Escócia</h2>
-        <p>Data: 24/06/2026 | Expectativa: <strong>Volume de Ataque Elevado</strong></p>
+        <h2 style="color: var(--gold);">Análise Tática Histórica</h2>
+        <p style="color: var(--verde); font-weight: bold;">BRASIL 1x1 MARROCOS</p>
+        <p>Estratégia: Jogo posicional. Bloqueio tático sofrido por transição em bloco baixo.</p>
+        <p style="color: var(--verde); font-weight: bold;">BRASIL 3x0 HAITI</p>
+        <p>Estratégia: Pressão alta vertical. Superioridade técnica na conclusão.</p>
     </div>
 
     <div class="card">
-        <h2>Input de Projeção</h2>
-        <input type="text" id="nome" placeholder="Seu Nome">
-        <input type="text" id="palpite" placeholder="Projeção (ex: Vitória Brasil)">
+        <h2 style="color: var(--gold);">Input de Dados</h2>
+        <input type="text" id="nome" placeholder="Analista Responsável">
         <button onclick="registrar()">REGISTRAR ANÁLISE</button>
-        <canvas id="meuGrafico" style="max-height: 250px; margin-top: 20px;"></canvas>
     </div>
-</div>
-
-<div class="card" style="margin-top: 30px;">
-    <h2>Registro de Analistas (Real-time)</h2>
-    <table><thead><tr><th>Analista</th><th>Projeção</th></tr></thead><tbody id="lista-apostas"></tbody></table>
 </div>
 
 <script>
-    let chart;
-    function atualizarGrafico(contagem) {
-        const ctx = document.getElementById('meuGrafico').getContext('2d');
-        if (chart) chart.destroy();
-        chart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Brasil', 'Empate', 'Escócia'],
-                datasets: [{ data: [contagem.Brasil, contagem.Empate, contagem.Escócia], backgroundColor: ['#D4AF37', '#555', '#008060'] }]
-            },
-            options: { plugins: { legend: { labels: { color: 'white' } } } }
-        });
+    function registrar() {
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        alert("Análise registrada com sucesso!");
     }
 </script>
-
 </body>
 </html>
