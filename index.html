@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AFinanceira - Terminal de Inteligência</title>
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <div class="overlay"></div>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">A</div>
+    </div>
+
+    <nav>
+      <a href="#"><i class="fas fa-house"></i></a>
+      <a href="#"><i class="fas fa-users"></i></a>
+      <a href="#"><i class="fas fa-chart-line"></i></a>
+      <a href="#"><i class="fas fa-gear"></i></a>
+    </nav>
+  </aside>
+
+  <main class="dashboard">
+
+    <header class="topbar">
+      <div>
+        <h1>AFINANCEIRA - TERMINAL DE INTELIGÊNCIA • BRASIL 2026</h1>
+      </div>
+
+      <div class="top-icons">
+        <i class="fas fa-bell"></i>
+        <i class="fas fa-user-circle"></i>
+      </div>
+    </header>
+
+    <section class="grid">
+
+      <div class="card historico">
+        <h2>Análise Tática Histórica</h2>
+
+        <div class="match-item">
+          <h3>🇧🇷 Brasil 1x1 Marrocos</h3>
+          <p>Performance: Brasil 1x1 Cordodada Briique</p>
+          <p>Performança: Brasil Marrocos</p>
+        </div>
+
+        <div class="match-item">
+          <h3>🇧🇷 Brasil 3x0 Haiti</h3>
+          <p>Performança: Brasil 3x0 Cordodada Briique</p>
+          <p>Rotoção: 4/4 Misones</p>
+        </div>
+      </div>
+
+      <div class="card confronto">
+        <h2>Próximo Confronto</h2>
+
+        <h3>BRASIL VS ESCÓCIA</h3>
+
+        <p>24/06/2026</p>
+
+        <p>Expectação intensidade: Alta</p>
+
+        <div class="intensidade">
+          Intensidade: <span id="intensidade">0</span>
+        </div>
+      </div>
+
+      <div class="card input">
+
+        <h2>Input de Dados</h2>
+
+        <label>Analista Responsável</label>
+        <input type="text" id="analista">
+
+        <label>Projeção</label>
+
+        <div class="buttons">
+
+          <button class="active" data-value="Brasil vence">
+            BRASIL VENCE
+          </button>
+
+          <button data-value="Empate">
+            EMPATE
+          </button>
+
+          <button data-value="Escócia vence">
+            ESCÓCIA VENCE
+          </button>
+
+        </div>
+
+        <div class="chart-container">
+          <canvas id="consensusChart"></canvas>
+        </div>
+
+        <button id="registrar" class="register-btn">
+          REGISTRAR ANÁLISE
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script type="module" src="./js/app.js"></script>
+
+</body>
+</html>
